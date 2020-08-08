@@ -7,8 +7,8 @@ Example of how to integrate Percy visual tests with WebdriverIO.
 $ npm install
 $ PERCY_TOKEN=... npm test
 
-$ git clone https://github.com/percy/example-webdriverio.git
-$ cd example-webdriverio/
+$ git clone https://github.com/BrowserStackCE/percy-webdriverio-bstack-demo
+$ cd percy-webdriverio-bstack-demo
 
 $ export PERCY_TOKEN=...
 $ npm install
