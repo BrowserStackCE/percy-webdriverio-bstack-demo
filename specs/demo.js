@@ -24,6 +24,7 @@ describe('example page', function() {
   it('should load web application pages', async function () {
     // Run tests
     await browser.url(`${URL}/signup`);
+    await browser.maximizeWindow();
     await percySnapshot(browser, 'Signup Page', {widths: TEST_WIDTHS});
 
     var element = await $('#signup-email')

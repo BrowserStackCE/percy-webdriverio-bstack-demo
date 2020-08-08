@@ -35,7 +35,7 @@ exports.config = {
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60000
+    timeout: 120000
   },
   // Code to start browserstack local before start of test
   onPrepare: function (config, capabilities) {
