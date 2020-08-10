@@ -8,7 +8,7 @@ if ! [ -x "$(command -v hub)" ]; then
 fi
 
 
-NOW=`date +%d%H%M%S`
+NOW=$BUILD_TIMESTAMP
 BASE_BRANCH="master-$NOW"
 BRANCH="update-button-$NOW"
 if [ ${CI_USER_ID} != '' ]
@@ -38,12 +38,15 @@ export PERCY_PULL_REQUEST=$PR_NUM
 
 npm test
 
-# Create the fake "ci/service: Tests passed" notification on the PR.
-# Uses a personal access token (https://github.com/settings/tokens) which has scope "repo:status".
+BUILD_ID=$(curl \
+  -u $BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY \
+  "https://api.browserstack.com/automate/builds.json?limit=1" | jq -r '.[] .automation_build .hashed_id')
+
 curl \
   -u $GITHUB_USER:$GITHUB_TOKEN \
-  -d '{"state": "success", "target_url": "https://example.com/build/status", "description": "Tests passed", "context": "ci/service"}' \
+  -d '{"state": "success", "target_url": "https://automate.browserstack.com/dashboard/v2/builds/'$BUILD_ID'", "description": "Tests passed", "context": "browserstackci/service"}' \
   "https://api.github.com/repos/BrowserStackCE/percy-webdriverio-bstack-demo/statuses/$(git rev-parse --verify HEAD)"
+
 
 git checkout master
 git branch -D $BASE_BRANCH
