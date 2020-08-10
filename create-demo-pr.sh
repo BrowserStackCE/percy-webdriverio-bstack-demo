@@ -38,13 +38,21 @@ export PERCY_PULL_REQUEST=$PR_NUM
 
 npm test
 
-BUILD_ID=$(curl \
+BUILD_ID_STATUS=$(curl \
   -u $BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY \
-  "https://api.browserstack.com/automate/builds.json?limit=1" | jq -r '.[] .automation_build .hashed_id')
+  "https://api.browserstack.com/automate/builds.json?limit=1" | jq -r '.[] .automation_build | "\(.hashed_id) \(.status)"')
+
+BUILD_ID=$(echo $BUILD_ID_STATUS |  cut -d' ' -f1)
+STATUS=$(echo $BUILD_ID_STATUS |  cut -d' ' -f2)
+if [[ $STATUS='done' ]]; then
+  STATUS='success'
+else
+  STATUS='failure'
+fi
 
 curl \
   -u $GITHUB_USER:$GITHUB_TOKEN \
-  -d '{"state": "success", "target_url": "https://automate.browserstack.com/dashboard/v2/builds/'$BUILD_ID'", "description": "Tests passed", "context": "browserstackci/service"}' \
+  -d '{"state": "'$STATUS'", "target_url": "https://automate.browserstack.com/dashboard/v2/builds/'$BUILD_ID'", "description": "Tests '$STATUS'", "context": "browserstackci/service"}' \
   "https://api.github.com/repos/BrowserStackCE/percy-webdriverio-bstack-demo/statuses/$(git rev-parse --verify HEAD)"
 
 
