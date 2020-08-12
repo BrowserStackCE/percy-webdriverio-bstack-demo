@@ -5,9 +5,9 @@ var common = require('./../helper/common');
 
 describe('Spark demo application - Dashboard page', function() {
   const title = this.title
-  browser.maximizeWindow();
   it('should load dashboard page', async function () {
     try {
+      await browser.maximizeWindow();
       await browser.url(`${common.constants.URL}:${common.constants.PORT}/`);
       await percySnapshot(browser, 'Index Page', {widths: common.constants.TEST_WIDTHS});
       common.mark_test_status(browser.sessionId, "passed", "", title, 'automate')
@@ -19,6 +19,7 @@ describe('Spark demo application - Dashboard page', function() {
 
   it('should load dashboard page - Index Menu closed', async function () {
     try {
+      await browser.maximizeWindow();
       await browser.execute(() => { $('#menu-toggle').click() });
       await percySnapshot(browser, 'Index Page Menu Closed', {widths: common.constants.TEST_WIDTHS});
       // reset menu
@@ -32,6 +33,7 @@ describe('Spark demo application - Dashboard page', function() {
 
   it('should load dashboard page - Index Top row closed', async function () {
     try {
+      await browser.maximizeWindow();
       await browser.execute(() => { $('#messages-toggle').click() });
       await browser.execute(() => { $('#todo-toggle').click() });
       await browser.execute(() => {$('#calendar-toggle').click() });
@@ -50,6 +52,7 @@ describe('Spark demo application - Dashboard page', function() {
 
   it('should load dashboard page - Profile menu', async function () {
     try {
+      await browser.maximizeWindow();
       element = await $('#nav-profile-menu')
       element.click();
 
@@ -67,6 +70,7 @@ describe('Spark demo application - Dashboard page', function() {
 
   it('should load dashboard page - Messages menu', async function () {
     try {
+      await browser.maximizeWindow();
       element = await $('#nav-messages-menu')
       element.click();
 
@@ -83,6 +87,7 @@ describe('Spark demo application - Dashboard page', function() {
 
   it('should load dashboard page - Tasks menu', async function () {
     try {
+      await browser.maximizeWindow();
       element = await $('#nav-tasks-menu')
       element.click();
 

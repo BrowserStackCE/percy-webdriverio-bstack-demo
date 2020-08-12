@@ -4,9 +4,9 @@ var common = require('./../helper/common');
 
 describe('Spark demo application - Login page', function() {
   const title = this.title
-  browser.maximizeWindow();
   it('should load login page', async function () {
       try {
+      await browser.maximizeWindow();
       await browser.url(`${common.constants.URL}:${common.constants.PORT}/login`);
       await percySnapshot(browser, 'Login Page', {widths: common.constants.TEST_WIDTHS});
       common.mark_test_status(browser.sessionId, "passed", "", title, 'automate')
@@ -17,7 +17,8 @@ describe('Spark demo application - Login page', function() {
 
   it('should load login page - Validations', async function () {
     try {
-      element = await $('#login-email')
+      await browser.maximizeWindow();
+      var element = await $('#login-email')
       await element.setValue("test-login@percy.io")
       await browser.execute(() => { $('#login-submit').click() });
       await percySnapshot(browser, 'Login Page Validation', {widths: common.constants.TEST_WIDTHS});

@@ -15,6 +15,7 @@ exports.config = {
     browser: 'Chrome',
     os: 'Windows',
     os_version: '10',
+    project: 'Percy WebDriverIO BrowserStack Demo',
     name: 'percy_test',
     build: 'percy-webdriverio-bstack-demo: ' + process.env.BUILD_TIMESTAMP,
     'browserstack.local': true,
