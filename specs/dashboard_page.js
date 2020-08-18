@@ -7,8 +7,9 @@ describe('Spark demo application - Dashboard page', function() {
   const title = this.title
   it('should load dashboard page', async function () {
     try {
-      await browser.maximizeWindow();
       await browser.url(`${common.constants.URL}:${common.constants.PORT}/`);
+      await browser.maximizeWindow();
+      await browser.pause(1000);
       await percySnapshot(browser, 'Index Page', {widths: common.constants.TEST_WIDTHS});
       common.mark_test_status(browser.sessionId, "passed", "", title, 'automate')
     } catch (e) {
